@@ -7,9 +7,11 @@ import {
     VerifyTokenResponse 
 } from './model';
 
-// const API_BASE_URL = 'https://demo.winvinaya.com';
-const API_BASE_URL = 'http://127.0.0.1:5000'; 
-// Axios instance for default configurations
+const API_BASE_URL =
+    import.meta.env.MODE === 'development'
+        ? 'http://127.0.0.1:5000'
+        : ''; // Empty string works with Nginx in production
+
 const axiosInstance = axios.create({
     baseURL: `${API_BASE_URL}`,
     withCredentials: true, // Include cookies in requests
