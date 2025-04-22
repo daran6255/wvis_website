@@ -10,6 +10,17 @@ ssh -i "wvis_website.pem" ubuntu@ec2-52-66-236-26.ap-south-1.compute.amazonaws.c
 ### step-1
 sudo apt update
 sudo apt upgrade -y
+sudo apt install nginx python3-pip python3-venv git curl -y
+sudo apt install -y nodejs npm
+sudo apt install postgresql postgresql-contrib -y
+
+### push from git to server
+git clone https://github.com/daran6255/wvis_website.git
+
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 
 ### step-2 Install postgres sql
 sudo apt install postgresql postgresql-contrib -y
@@ -27,16 +38,8 @@ exit
 #### create new database 
 sudo -u postgres createdb wvis-website
 
-### push from git to server
-git clone https://github.com/daran6255/wvis_website.git
-
-
-### Install dependency
-sudo apt install python3-pip
-sudo apt install python3.12-venv
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+#### run backend application
+python -m main
 
 ### Pm2 config
 sudo apt install -y nodejs npm
@@ -72,6 +75,14 @@ server {
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 	}
+
+	location / {
+    proxy_pass http://127.0.0.1:5000/;  # Backend runs on port 5000
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
 }
 
 

@@ -15,7 +15,7 @@ const AuthProtected: React.FC<AuthProtectedProps> = ({ children, roles }) => {
     const dispatch = useDispatch();
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [userProfile, setUserProfile] = useState<{ role: string } | null>(null);
+    const [userProfile, setUserProfile] = useState<{ id: string; email: string; role: string } | null>(null);
     const showToast = useCustomToast();
 
     useEffect(() => {
@@ -23,7 +23,10 @@ const AuthProtected: React.FC<AuthProtectedProps> = ({ children, roles }) => {
             try {
                 const response = await verifyToken(); // Verifying token
                 const user = response.result; // Adjust according to your response structure
-                setUserProfile(user);
+                if (user) {
+                    setUserProfile({ ...user, role: 'user' }); // Temporary fix
+                  }                  
+                // setUserProfile(user);
                 setIsAuthorized(true); // User is authorized
             } catch (error) {
                 // Handle token verification failure
