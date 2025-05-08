@@ -125,22 +125,25 @@ sudo apt install nginx -y
 sudo nano /etc/nginx/sites-available/default
 
 server {
-	listen 80;
-	server_name demo.winvinaya.com www.demo.winvinaya.com;
+    server_name demo.winvinaya.com www.demo.winvinaya.com;
 
-	location / {
-		proxy_pass http://localhost:5173/;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-	}
+    # Backend API (Flask) routes — must be first
+    location ~ ^/(auth|api/newsletters) {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
 
-	location / {
-    proxy_pass http://127.0.0.1:5000/;  # Backend runs on port 5000
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-}
+    # Frontend React app (Vite)
+    location / {
+        proxy_pass http://localhost:5173/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
 
 }
 

@@ -9,7 +9,7 @@ import Team from '../components/Home/Team';
 import Details from '../components/Home/Details';
 import Product from '../components/Home/Product';
 import DEI from '../components/Home/DEI';
-import Blog from '../components/Home/Blog';
+// import Blog from '../components/Home/Blog';
 import SecHeroSection from '../components/Home/SecHeroSection';
 
 const Home = () => {
@@ -26,7 +26,7 @@ const Home = () => {
             <Product />
             <Team />
             <Testimonials />    
-            <Blog />
+            {/* <Blog /> */}
             <Footer />
         </>
     );

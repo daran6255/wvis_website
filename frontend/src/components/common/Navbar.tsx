@@ -75,7 +75,8 @@ const Navbar = () => {
 
           {/* Desktop Nav */}
           <HStack spacing={6} display={{ base: 'none', md: 'flex' }} mr={6}>
-            {['About', 'Newsletters', 'Blogs', 'Resources'].map((item, idx) => (
+          {/* {['About', 'Newsletters', 'Blogs', 'Resources'].map((item, idx) => ( */}
+            {['About', 'Newsletters'].map((item, idx) => (
               <Link
                 key={idx}
                 href={`/${item.toLowerCase()}`}
