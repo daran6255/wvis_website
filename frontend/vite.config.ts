@@ -1,14 +1,20 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: true, // allow access from external devices
+    host: true,
+    allowedHosts: ['demo.winvinaya.com'],
     proxy: {
-      '/api': 'http://127.0.0.1:5000', // backend runs locally, not via HTTPS here
+      '/auth': {
+        target: 'http://127.0.0.1:5000',
+        changeOrigin: true,
+      },
+      '/api': {
+        target: 'http://127.0.0.1:5000',
+        changeOrigin: true,
+      },
     },
-    allowedHosts: ['demo.winvinaya.com'], // allow requests from your domain
   },
 })

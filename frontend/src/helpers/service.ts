@@ -9,9 +9,10 @@ import {
 
 const API_BASE_URL =
     import.meta.env.MODE === 'development'
-        ? 'http://127.0.0.1:5000'
+        ? 'https://demo.winvinaya.com'
         : ''; // Empty string works with Nginx in production
 
+// Axios instance for default configurations
 const axiosInstance = axios.create({
     baseURL: `${API_BASE_URL}`,
     withCredentials: true, // Include cookies in requests

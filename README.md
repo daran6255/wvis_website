@@ -6,7 +6,7 @@ whoami
 icacls.exe wvis_website.pem  /grant:r dharanidaran\daran:(R)
 icacls.exe wvis_website.pem  /inheritance:r
 
-ssh -i "wvis_website.pem" ubuntu@ec2-52-66-236-26.ap-south-1.compute.amazonaws.com
+ssh -i "wvis_website.pem" ubuntu@ec2-3-110-219-158.ap-south-1.compute.amazonaws.com
 ### step-1
 sudo apt update
 sudo apt upgrade -y
@@ -41,20 +41,79 @@ sudo -u postgres createdb wvis-website
 #### run backend application
 python -m main
 
+#### build frontend application
+cd frontend
+npm install
+npm run build
+
+### Nginx config
+sudo nano /etc/nginx/sites-available/default
+
+server {
+    listen 80;
+    server_name demo.winvinaya.com;
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:5000/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    location / {
+        proxy_pass http://localhost:5173/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+
+sudo nginx -t
+sudo systemctl restart nginx
+
+
+#### Run Flask as a Service
+sudo nano /etc/systemd/system/flask.service
+**paste below in this **
+[Unit]
+Description=Flask Backend Service
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/backend
+ExecStart=/home/ubuntu/backend/venv/bin/python -m main.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable flask
+sudo systemctl start flask
+
+#### Add SSL with Let's Encrypt
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d demo.winvinaya.com
+
+
 ### Pm2 config
-sudo apt install -y nodejs npm
 sudo npm install -g pm2
-cd ~/powerautomate
-source venv/bin/activate
 pm2 start venv/bin/python3 --name backend --cwd ~/wvis_website/backend -- main.py
 pm2 start "npm run dev" --name frontend --cwd ~/wvis_website/frontend
 pm2 save
 pm2 startup
 pm2 list
-pm2 logs powerautomate
+pm2 logs backend
 
-pm2 restart powerautomate - ## for restart
-pm2 stop powerautomate - ## for stop
+pm2 restart backend
+pm2 stop backend 
 
 
 ## Making It Available on Port 80 (NGINX)
