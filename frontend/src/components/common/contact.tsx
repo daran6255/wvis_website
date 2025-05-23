@@ -48,21 +48,21 @@ export default function ContactPage() {
               <Stack spacing={6}>
                 <Flex align="center">
                   <Icon as={MdLocationOn} boxSize={6} mr={3} color="purple.500" />
-                  <Text fontSize="md">123 Inclusion Street, Chennai, TN 600001</Text>
+                  <Text fontSize="md">25/3 Brindavan, 3rd Cross, Post, Nyanappana Halli, Hulimavu, Bengaluru, Karnataka 560076</Text>
                 </Flex>
                 <Flex align="center">
                   <EmailIcon boxSize={5} mr={3} color="blue.500" />
-                  <Text fontSize="md">contact@yourdomain.com</Text>
+                  <Text fontSize="md">info@winvinaya.com</Text>
                 </Flex>
                 <Flex align="center">
                   <PhoneIcon boxSize={5} mr={3} color="green.500" />
-                  <Text fontSize="md">+91 98765 43210</Text>
+                  <Text fontSize="md">+91 88702 53474</Text>
                 </Flex>
               </Stack>
 
               <Box mt={8} w="100%" h="280px" borderRadius="xl" overflow="hidden" boxShadow="lg">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3912.550126366076!2d80.27071821524258!3d13.082680390784387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265ddce5c3cb7%3A0x36e50cb28a594e06!2sChennai!5e0!3m2!1sen!2sin!4v1614770999855!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.4057357187976!2d77.60912577507493!3d12.881611787425545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15bf4b28eb9f%3A0x17a2dfc50e265b85!2sWinVinaya%20InfoSystems%20India%20Private%20Limited!5e0!3m2!1sen!2sin!4v1747979212877!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
