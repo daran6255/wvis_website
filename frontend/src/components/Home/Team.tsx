@@ -19,22 +19,26 @@ const teamMembers = [
   {
     name: 'Sivasankar Jayagopal',
     role: 'Founder & Chairman',
-    image: '/assets/Shiva.jpg',
+    image: '/assets/teams/Shiva.jpg',
+    description: 'A recognized IT thought leader with 30+ years of expertise, has held key roles at Keane (NTT Data), Adobe, and Microsoft, driving benchmarking and global engagements.',
   },
   {
     name: 'Akila Sankar',
     role: 'Co-Founder',
-    image: '/assets/Shiva.jpg',
+    image: '/assets/teams/Akila.jpg',
+    description: 'An expert in disability support, child development, neurodiversity, soft skills, and Indian Sign Language, with 17+ years of experience.',
   },
   {
     name: 'Baskaran Arumugam',
     role: 'Director - Products',
-    image: '/assets/Shiva.jpg',
+    image: '/assets/teams/Baskaran.jpg',
+    description: 'An IT expert with 27+ years of experience, specializes in software design, testing, automation, and Agile project management, with domain expertise across cloud telephony, medical devices, and test equipment.',
   },
   {
     name: 'Aravindan G',
     role: 'Director - Business Intelligence',
-    image: '/assets/Shiva.jpg',
+    image: '/assets/teams/Aravindan.jpg',
+    description: 'A Power BI expert with 22+ years of IT experience, has shaped Microsofts data-driven culture, trained top corporates, and specializes in CIO and Engineering dashboards.',
   },
 ];
 
@@ -134,7 +138,7 @@ const Team = () => {
               </HStack>
 
               <Text fontSize="sm" color="gray.500" id={`team-member-desc-${index}`}>
-                Passionate about inclusive tech and lifelong learning.
+                {member.description}
               </Text>
             </Box>
           ))}
