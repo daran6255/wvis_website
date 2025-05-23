@@ -10,9 +10,9 @@ from .api.signup import blp as signup_bp  # Signup blueprint
 from .api.logout import blp as logout_bp  # Logout blueprint
 from .api.verify_token import blp as verify_token_bp  # Verify token blueprint
 from .api.newsletter import blp as newsletter
-from .api.newsletter import static_routes
-
+from .api.static_routes import static_bp
 import os
+
 jwt = JWTManager()  # JWT Manager initialization
 
 
@@ -47,6 +47,6 @@ def create_app():
     app.register_blueprint(logout_bp)  # Logout endpoints
     app.register_blueprint(verify_token_bp)  # Verify token endpoints
     app.register_blueprint(newsletter)
-    app.register_blueprint(static_routes.static_bp)
+    app.register_blueprint(static_bp)
 
     return app
