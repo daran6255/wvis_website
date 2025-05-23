@@ -9,7 +9,7 @@ import {
 
 const API_BASE_URL =
     import.meta.env.MODE === 'development'
-        ? 'https://demo.winvinaya.com'
+        ? 'https://winvinaya.com'
         : ''; // Empty string works with Nginx in production
 
 // Axios instance for default configurations

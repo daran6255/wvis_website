@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: true,
-    allowedHosts: ['demo.winvinaya.com'],
+    allowedHosts: ['winvinaya.com'],
     proxy: {
       '/auth': {
         target: 'http://127.0.0.1:5000',
