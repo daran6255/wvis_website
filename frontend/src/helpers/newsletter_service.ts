@@ -39,3 +39,11 @@ export const postNewsletter = async (data: NewsletterPostData): Promise<Newslett
 
   return response.data;
 };
+
+/**
+ * Delete a newsletter by UUID
+ */
+export const deleteNewsletter = async (newsletterId: string): Promise<{ message: string }> => {
+  const response = await axios.delete<{ message: string }>(`${API_BASE}/delete/${newsletterId}`);
+  return response.data;
+};

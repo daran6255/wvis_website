@@ -53,13 +53,14 @@ export interface VerifyTokenResponse {
 // ---------------------------------------
 // Newsletter Interfaces
 // ---------------------------------------
-
-export interface Newsletter {
+    export interface Newsletter {
+    id: string;
     title: string;
-    image: string;      // URL from backend: /static/images/...
-    link: string;       // URL from backend: /static/pdfs/...
+    image: string;
+    link: string;
     description: string;
-  }
+    }
+
   
   // FormData format when sending POST request with files
   export interface NewsletterPostData {

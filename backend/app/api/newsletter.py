@@ -14,14 +14,15 @@ def get_all_newsletters():
 
     for item in newsletters:
         result.append({
+            "id": str(item.id),  # ✅ Add this line
             "title": item.title,
             "image": url_for("static", filename=f"images/{item.image}", _external=True),
             "link": url_for("static", filename=f"pdfs/{item.pdf}", _external=True),
             "description": item.description,
         })
+        # print(result)
 
     return jsonify(result), 200
-
 
 
 @blp.route("/postnewsletter", methods=["POST"])
@@ -58,3 +59,29 @@ def create_newsletter():
     db.session.commit()
 
     return jsonify({"message": "Newsletter created successfully!"}), 201
+
+@blp.route("/delete/<uuid:newsletter_id>", methods=["DELETE"])
+def delete_newsletter(newsletter_id):
+    newsletter = Newsletter.query.get(newsletter_id)
+    
+    if not newsletter:
+        return jsonify({"error": "Newsletter not found"}), 404
+
+    # Construct full file paths
+    image_path = os.path.join(current_app.static_folder, "images", newsletter.image)
+    pdf_path = os.path.join(current_app.static_folder, "pdfs", newsletter.pdf)
+
+    # Attempt to delete image and pdf files
+    try:
+        if os.path.exists(image_path):
+            os.remove(image_path)
+        if os.path.exists(pdf_path):
+            os.remove(pdf_path)
+    except Exception as e:
+        current_app.logger.error(f"File deletion error: {e}")
+
+    # Delete the newsletter record
+    db.session.delete(newsletter)
+    db.session.commit()
+
+    return jsonify({"message": "Newsletter deleted successfully."}), 200
