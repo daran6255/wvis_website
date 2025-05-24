@@ -106,7 +106,9 @@ export default function Blog() {
                   {featured.title}
                   <Badge colorScheme="red" fontSize="0.4em" ml={5} px={2} py={1} borderRadius="md">NEW</Badge>
                 </Heading>
-                <Text color="gray.600">{featured.description}</Text>
+                  <Text color="gray.600" noOfLines={3}>
+                    {featured.description}
+                  </Text>
                 <Text fontSize="sm" color="gray.500" mb={2}>
                   By {featured.author} • {new Date(featured.created_at).toLocaleDateString()}
                 </Text>
@@ -198,9 +200,9 @@ const BlogCard = ({
           </Tag>
         ))}
       </Stack>
-      <Text fontSize="sm" color={useColorModeValue('gray.700', 'gray.300')}>
-        {description}
-      </Text>
+    <Text fontSize="sm" color={useColorModeValue('gray.700', 'gray.300')}>
+      {description.length > 150 ? description.slice(0, 150) + '...' : description}
+    </Text>
     </Box>
   )
 }
