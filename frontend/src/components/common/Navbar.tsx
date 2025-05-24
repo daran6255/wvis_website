@@ -76,7 +76,7 @@ const Navbar = () => {
           {/* Desktop Nav */}
           <HStack spacing={6} display={{ base: 'none', md: 'flex' }} mr={6}>
           {/* {['About', 'Newsletters', 'Blogs', 'Resources'].map((item, idx) => ( */}
-            {['About', 'Newsletters'].map((item, idx) => (
+            {['About', 'Newsletters', 'Blogs' ].map((item, idx) => (
               <Link
                 key={idx}
                 href={`/${item.toLowerCase()}`}
@@ -166,7 +166,7 @@ const Navbar = () => {
             <DrawerHeader id="drawer-menu">Menu</DrawerHeader>
             <DrawerBody>
               <VStack align="start" spacing={4}>
-                {['Home', 'About', 'Newsletters', 'Blogs', 'Resources'].map((item, idx) => (
+                {['Home', 'About', 'Newsletters', 'Blogs'].map((item, idx) => (
                   <Link
                     key={idx}
                     href={`/${item.toLowerCase()}`}
@@ -193,7 +193,7 @@ const Navbar = () => {
                     Contact Us
                   </Button>
 
-                  <Button
+                  {/* <Button
                     w="full"
                     bgGradient="linear(to-r, purple.400, purple.500)"
                     color="white"
@@ -201,7 +201,7 @@ const Navbar = () => {
                     aria-label="Login button"
                   >
                     LOGIN
-                  </Button>
+                  </Button> */}
                 </Stack>
 
                 {/* Social Media in Drawer */}
