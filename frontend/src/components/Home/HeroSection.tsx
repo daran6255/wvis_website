@@ -53,6 +53,7 @@ const HeroSection = () => {
         overflow="hidden"
         minH="100vh"
         bg="white"
+        mt={{ base: 0, md: 20 }}
         px={{ base: 4, md: 20 }}
         py={{ base: 6, md: 12 }}
         style={{ perspective: "1000px" }}

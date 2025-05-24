@@ -55,9 +55,11 @@ const Navbar = () => {
         bg={scrolling ? 'white' : 'transparent'}
         boxShadow={scrolling ? 'md' : 'none'}
         px={[4, 6, 10]}
-        py={4}
-        position="sticky"
+        py={2}
+        position="fixed"
         top="0"
+        left="0"
+        right="0"
         zIndex="1000"
         transition="background-color 0.3s ease, box-shadow 0.3s ease"
       >
