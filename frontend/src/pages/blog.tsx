@@ -27,6 +27,15 @@ import { Blog as BlogType } from '../helpers/model'
 export default function Blog() {
   const [blogData, setBlogData] = useState<BlogType[]>([])
   const [loading, setLoading] = useState(true)
+  const textColor = useColorModeValue('gray.700', 'gray.200')
+
+  const stripHtml = (html: string) => {
+  if (!html) return ''
+  const div = document.createElement('div')
+  div.innerHTML = html
+  return div.textContent || div.innerText || ''
+}
+
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -168,9 +177,19 @@ export default function Blog() {
                     NEW
                   </Badge>
                 </Heading>
-                <Text color="gray.600" noOfLines={3} wordBreak="break-word">
-                  {featured.description}
-                </Text>
+                <Text
+                    color={textColor}
+                    fontSize={{ base: 'md', md: 'lg' }}
+                    lineHeight="tall"
+                    whiteSpace="normal"
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        stripHtml(featured.description).length > 150
+                          ? stripHtml(featured.description).slice(0, 150) + '...'
+                          : featured.description,
+                    }}
+                  />
+
                 <Text fontSize="sm" color="gray.500" mb={2}>
                   By {featured.author} •{' '}
                   {new Date(featured.created_at).toLocaleDateString()}
@@ -240,7 +259,6 @@ export default function Blog() {
           )}
         </Container>
       </Box>
-
       <Footer />
     </>
   )
@@ -256,6 +274,12 @@ const BlogCard = ({
   created_at,
   author,
 }: BlogType) => {
+  const stripHtml = (html: string) => {
+  if (!html) return ''
+  const div = document.createElement('div')
+  div.innerHTML = html
+  return div.textContent || div.innerText || ''
+}
   return (
     <ChakraLink
       as={Link}
@@ -300,8 +324,11 @@ const BlogCard = ({
         ))}
       </Stack>
       <Text fontSize="sm" color={useColorModeValue('gray.700', 'gray.300')}>
-        {description.length > 150 ? description.slice(0, 150) + '...' : description}
+        {stripHtml(description).length > 150
+          ? stripHtml(description).slice(0, 150) + '...'
+          : stripHtml(description)}
       </Text>
+
     </ChakraLink>
   )
 }

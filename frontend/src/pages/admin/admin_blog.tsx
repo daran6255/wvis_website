@@ -4,7 +4,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   VStack,
   useDisclosure,
   Modal,
@@ -22,6 +21,22 @@ import { BlogPostData } from "../../helpers/model";
 import useCustomToast from "../../hooks/useCustomToast";
 import DB_Navbar from "../../components/common/DB_Navbar";
 import BlogTable from "../../components/admin/blog_table";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
+// ReactQuill toolbar configuration with color support
+const quillModules = {
+  toolbar: [
+    [{ font: [] }],
+    [{ header: [1, 2, 3, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["blockquote", "code-block"],
+    ["link", "image"],
+    ["clean"],
+  ],
+};
 
 const AdminBlogForm = () => {
   const showToast = useCustomToast();
@@ -32,7 +47,7 @@ const AdminBlogForm = () => {
     description: string;
     image?: File;
     author: string;
-    tags: string; // store raw comma-separated string in UI
+    tags: string;
   }>({
     title: "",
     description: "",
@@ -128,11 +143,18 @@ const AdminBlogForm = () => {
 
                   <FormControl isRequired>
                     <FormLabel>Description</FormLabel>
-                    <Textarea
-                      name="description"
+                    <ReactQuill
+                      theme="snow"
                       value={formData.description}
-                      onChange={handleInputChange}
+                      onChange={(content) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: content,
+                        }))
+                      }
                       placeholder="Enter blog description"
+                      style={{ backgroundColor: "white" }}
+                      modules={quillModules}
                     />
                   </FormControl>
 
