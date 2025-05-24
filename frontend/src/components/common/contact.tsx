@@ -22,7 +22,7 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      <Box bg={useColorModeValue('gray.50', 'gray.800')} px={[10, 20]} py={[10, 20]}>
+      <Box bg={useColorModeValue('gray.50', 'gray.800')} mt={{ base: 0, md: 20 }} px={[10, 20]} py={[10, 20]}>
         <Container maxW="7xl">
           <Heading
             textAlign="center"

@@ -43,6 +43,7 @@ export default function About() {
         bgImage="url('/assets/13108.jpg')"
         bgSize="cover"
         bgPos="center"
+        mt={{ base: 0, md: 20 }}
         py={{ base: 20, md: 36 }}
         position="relative"
       >

@@ -49,7 +49,9 @@ export default function Blog() {
       <Navbar />
 
       {/* Hero Section */}
-      <Box bg="radial-gradient(circle,rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%)" py={20} textAlign="center">
+      <Box bg="radial-gradient(circle,rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%)" py={20}
+      mt={{ base: 0, md: 20 }}
+      textAlign="center">
         <Heading fontSize={{ base: '3xl', md: '5xl' }}>Our Blog</Heading>
         <Text fontSize={{ base: 'md', md: 'lg' }} color="white.600" mt={4}>
           Discover stories, insights, and updates from our journey.

@@ -47,6 +47,7 @@ export default function NewsletterPage() {
       <Box
         bg="linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%)"
         py={20}
+        mt={{ base: 0, md: 20 }}
         textAlign="center"
       >
         <Heading fontSize={{ base: '3xl', md: '5xl' }} color="white">
