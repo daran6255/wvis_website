@@ -21,3 +21,6 @@
 flask db init  # Initializes the migrations folder
 flask db migrate -m "Initial migration"  # Creates the migration script
 flask db upgrade  # Applies the migration and creates the table
+
+flask db migrate -m "Add blog table"
+flask db upgrade

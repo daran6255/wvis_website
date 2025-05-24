@@ -78,3 +78,34 @@ export interface VerifyTokenResponse {
     message: string;
   }
   
+// ---------------------------------------
+// Blog Interfaces
+// ---------------------------------------
+
+export interface Blog {
+  id: string;
+  title: string;
+  image: string;     // URL to image
+  tags: string[];     // List of tags
+  description: string; // Markdown or plain text content
+  author: string;
+  created_at: string; // ISO date string
+}
+
+// FormData format when sending POST request with image file
+export interface BlogPostData {
+  title: string;
+  description: string;
+  tags: string[];      // array of tags
+  author: string;
+  image?: File;        // Optional image file (for create/edit)
+}
+
+// Response from GET /api/blogs
+export type BlogListResponse = Blog[];
+
+// Response from POST /api/blogs
+export interface BlogPostResponse {
+  id: string;
+  message: string;
+}
