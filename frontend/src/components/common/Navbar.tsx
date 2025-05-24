@@ -4,7 +4,7 @@ import {
   HStack,
   IconButton,
   Button,
-  Link,
+  Link as ChakraLink,
   useDisclosure,
   Drawer,
   DrawerOverlay,
@@ -14,28 +14,68 @@ import {
   Image,
   VStack,
   DrawerCloseButton,
-  Stack,
-} from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
-import { FaLinkedin, FaInstagram, FaYoutube, FaFacebook, FaTwitter } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+} from '@chakra-ui/react'
+import { HamburgerIcon } from '@chakra-ui/icons'
+import { FaLinkedin, FaInstagram, FaYoutube, FaFacebook, FaTwitter } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
 const Navbar = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [scrolling, setScrolling] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [scrolling, setScrolling] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolling(window.scrollY > 10);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const handleScroll = () => setScrolling(window.scrollY > 10)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Menu links for reuse
+  const menuLinks = [
+    { label: 'Home', to: '/' },
+    { label: 'About', to: '/about' },
+    { label: 'Newsletters', to: '/newsletters' },
+    { label: 'Blogs', to: '/blogs' },
+  ]
+
+  const socialLinks = [
+    {
+      label: 'LinkedIn',
+      href: 'https://www.linkedin.com',
+      icon: FaLinkedin,
+      color: '#0A66C2',
+    },
+    {
+      label: 'Twitter X',
+      href: 'https://twitter.com',
+      icon: FaTwitter,
+      color: '#1DA1F2',
+    },
+    {
+      label: 'Instagram',
+      href: 'https://www.instagram.com',
+      icon: FaInstagram,
+      color: '#E1306C',
+    },
+    {
+      label: 'Facebook',
+      href: 'https://www.facebook.com',
+      icon: FaFacebook,
+      color: '#1877F2',
+    },
+    {
+      label: 'YouTube',
+      href: 'https://www.youtube.com',
+      icon: FaYoutube,
+      color: '#FF0000',
+    },
+  ]
 
   return (
-    <Box as="header" role="banner">
+    <Box as="header" role="banner" position="fixed" top={0} left={0} right={0} zIndex={1000}>
       {/* Skip to main content */}
-      <Link
-        href="/"
+      <ChakraLink
+        href="#main-content"
         position="absolute"
         left="-999px"
         _focus={{
@@ -49,47 +89,49 @@ const Navbar = () => {
         }}
       >
         Skip to main content
-      </Link>
+      </ChakraLink>
 
       <Box
         bg={scrolling ? 'white' : 'transparent'}
         boxShadow={scrolling ? 'md' : 'none'}
-        px={[4, 6, 10]}
-        py={2}
-        position="fixed"
-        top="0"
-        left="0"
-        right="0"
-        zIndex="1000"
+        px={{ base: 4, md: 8, lg: 10 }}
+        py={{ base: 2, md: 3 }}
         transition="background-color 0.3s ease, box-shadow 0.3s ease"
       >
-        <Flex h={16} alignItems="center" justifyContent="space-between">
-          {/* Clickable Logo */}
-          <Box ml={[0, 4]}>
-            <Link as={RouterLink} to="/" aria-label="Go to homepage">
+        <Flex h={{ base: '56px', md: '64px' }} alignItems="center" justifyContent="space-between" maxW="1200px" mx="auto">
+          {/* Logo */}
+          <Box>
+            <ChakraLink
+              as={RouterLink}
+              to="/"
+              aria-label="Go to homepage"
+              _focus={{ boxShadow: 'outline' }}
+            >
               <Image
                 src="/assets/WVIS.png"
                 alt="Website Logo"
-                h={{ base: '40px', md: '50px' }}
+                h={{ base: '36px', md: '48px' }}
+                objectFit="contain"
               />
-            </Link>
+            </ChakraLink>
           </Box>
 
           {/* Desktop Nav */}
-          <HStack spacing={6} display={{ base: 'none', md: 'flex' }} mr={6}>
-          {/* {['About', 'Newsletters', 'Blogs', 'Resources'].map((item, idx) => ( */}
-            {['About', 'Newsletters', 'Blogs' ].map((item, idx) => (
-              <Link
-                key={idx}
-                href={`/${item.toLowerCase()}`}
+          <HStack spacing={6} display={{ base: 'none', md: 'flex' }} alignItems="center">
+            {menuLinks.slice(1).map(({ label, to }) => (
+              <ChakraLink
+                key={label}
+                as={RouterLink}
+                to={to}
                 fontWeight="medium"
                 fontSize="md"
                 color="gray.700"
                 _hover={{ color: 'purple.600', textDecoration: 'none' }}
-                aria-label={`Navigate to ${item} page`}
+                aria-label={`Navigate to ${label} page`}
+                _focus={{ boxShadow: 'outline' }}
               >
-                {item}
-              </Link>
+                {label}
+              </ChakraLink>
             ))}
 
             <Button
@@ -98,6 +140,7 @@ const Navbar = () => {
               variant="outline"
               borderColor="green.200"
               fontWeight="bold"
+              size="sm"
               _hover={{ bg: 'green.50' }}
               aria-label="Contact Us page"
             >
@@ -106,46 +149,18 @@ const Navbar = () => {
 
             {/* Social Media Links */}
             <HStack spacing={3}>
-              <Link
-                href="https://www.linkedin.com"
-                isExternal
-                _hover={{ transform: 'scale(1.1)' }}
-                aria-label="Visit LinkedIn profile"
-              >
-                <FaLinkedin size="20" color="#0A66C2" />
-              </Link>
-              <Link
-                href="https://twitter.com"
-                isExternal
-                _hover={{ transform: 'scale(1.1)' }}
-                aria-label="Visit Twitter X profile"
-              >
-                <FaTwitter size="20" color="#1DA1F2" />
-              </Link>
-              <Link
-                href="https://www.instagram.com"
-                isExternal
-                _hover={{ transform: 'scale(1.1)' }}
-                aria-label="Visit Instagram profile"
-              >
-                <FaInstagram size="20" color="#E1306C" />
-              </Link>
-              <Link
-                href="https://www.facebook.com"
-                isExternal
-                _hover={{ transform: 'scale(1.1)' }}
-                aria-label="Visit Facebook profile"
-              >
-                <FaFacebook size="20" color="#1877F2" />
-              </Link>
-              <Link
-                href="https://www.youtube.com"
-                isExternal
-                _hover={{ transform: 'scale(1.1)' }}
-                aria-label="Visit YouTube channel"
-              >
-                <FaYoutube size="20" color="#FF0000" />
-              </Link>
+              {socialLinks.map(({ label, href, icon: Icon, color }) => (
+                <ChakraLink
+                  key={label}
+                  href={href}
+                  isExternal
+                  aria-label={`Visit ${label} profile`}
+                  _hover={{ transform: 'scale(1.1)' }}
+                  transition="transform 0.2s"
+                >
+                  <Icon size={20} color={color} />
+                </ChakraLink>
+              ))}
             </HStack>
           </HStack>
 
@@ -157,97 +172,70 @@ const Navbar = () => {
             display={{ base: 'flex', md: 'none' }}
             onClick={onOpen}
             variant="ghost"
+            _focus={{ boxShadow: 'outline' }}
           />
         </Flex>
 
         {/* Mobile Drawer */}
-        <Drawer isOpen={isOpen} placement="right" onClose={onClose} aria-labelledby="drawer-menu">
+        <Drawer
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          size="xs"
+          returnFocusOnClose={false}
+          onOverlayClick={onClose}
+          aria-label="Mobile navigation menu"
+        >
           <DrawerOverlay />
           <DrawerContent>
             <DrawerCloseButton aria-label="Close mobile menu" />
-            <DrawerHeader id="drawer-menu">Menu</DrawerHeader>
+            <DrawerHeader>Menu</DrawerHeader>
             <DrawerBody>
-              <VStack align="start" spacing={4}>
-                {['Home', 'About', 'Newsletters', 'Blogs'].map((item, idx) => (
-                  <Link
-                    key={idx}
-                    href={`/${item.toLowerCase()}`}
+              <VStack align="start" spacing={6}>
+                {menuLinks.map(({ label, to }) => (
+                  <ChakraLink
+                    key={label}
+                    as={RouterLink}
+                    to={to}
                     fontSize="lg"
                     fontWeight="medium"
-                    _hover={{ color: 'purple.600' }}
-                    aria-label={`Navigate to ${item} page in mobile menu`}
+                    _hover={{ color: 'purple.600', textDecoration: 'none' }}
+                    onClick={onClose}
+                    aria-label={`Navigate to ${label} page in mobile menu`}
+                    _focus={{ boxShadow: 'outline' }}
+                    w="full"
                   >
-                    {item}
-                  </Link>
+                    {label}
+                  </ChakraLink>
                 ))}
 
-                <Stack spacing={3} pt={4} w="full">
-                  <Button
-                    as={RouterLink}
-                    to="/contact"
-                    w="full"
-                    variant="outline"
-                    borderColor="green.200"
-                    fontWeight="bold"
-                    onClick={onClose}
-                    aria-label="Go to Contact Us page"
-                  >
-                    Contact Us
-                  </Button>
+                <Button
+                  as={RouterLink}
+                  to="/contact"
+                  w="full"
+                  variant="outline"
+                  borderColor="green.200"
+                  fontWeight="bold"
+                  onClick={onClose}
+                  aria-label="Go to Contact Us page"
+                >
+                  Contact Us
+                </Button>
 
-                  {/* <Button
-                    w="full"
-                    bgGradient="linear(to-r, purple.400, purple.500)"
-                    color="white"
-                    fontWeight="bold"
-                    aria-label="Login button"
-                  >
-                    LOGIN
-                  </Button> */}
-                </Stack>
-
-                {/* Social Media in Drawer */}
+                {/* Social Media Icons */}
                 <HStack spacing={5} pt={4}>
-                  <Link
-                    href="https://www.linkedin.com"
-                    isExternal
-                    _hover={{ transform: 'scale(1.1)' }}
-                    aria-label="Visit LinkedIn profile"
-                  >
-                    <FaLinkedin size="24" color="#0A66C2" />
-                  </Link>
-                  <Link
-                    href="https://twitter.com"
-                    isExternal
-                    _hover={{ transform: 'scale(1.1)' }}
-                    aria-label="Visit Twitter X profile"
-                  >
-                    <FaTwitter size="24" color="#1DA1F2" />
-                  </Link>
-                  <Link
-                    href="https://www.instagram.com"
-                    isExternal
-                    _hover={{ transform: 'scale(1.1)' }}
-                    aria-label="Visit Instagram profile"
-                  >
-                    <FaInstagram size="24" color="#E1306C" />
-                  </Link>
-                  <Link
-                    href="https://www.facebook.com"
-                    isExternal
-                    _hover={{ transform: 'scale(1.1)' }}
-                    aria-label="Visit Facebook profile"
-                  >
-                    <FaFacebook size="24" color="#1877F2" />
-                  </Link>
-                  <Link
-                    href="https://www.youtube.com"
-                    isExternal
-                    _hover={{ transform: 'scale(1.1)' }}
-                    aria-label="Visit YouTube channel"
-                  >
-                    <FaYoutube size="24" color="#FF0000" />
-                  </Link>
+                  {socialLinks.map(({ label, href, icon: Icon, color }) => (
+                    <ChakraLink
+                      key={label}
+                      href={href}
+                      isExternal
+                      aria-label={`Visit ${label} profile`}
+                      _hover={{ transform: 'scale(1.1)' }}
+                      transition="transform 0.2s"
+                    >
+                      <Icon size={24} color={color} />
+                    </ChakraLink>
+                  ))}
                 </HStack>
               </VStack>
             </DrawerBody>
@@ -255,7 +243,7 @@ const Navbar = () => {
         </Drawer>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

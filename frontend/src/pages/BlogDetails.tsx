@@ -46,7 +46,7 @@ export default function BlogDetails() {
   return (
     <>
       <Navbar />
-      <Box bg={bgColor} py={10} mt={{ base: 0, md: 20 }} minH="80vh">
+      <Box bg={bgColor} py={10} mt={{ base: 20, md: 20 }} minH="80vh">
         <Container maxW="5xl">
           {loading ? (
             <Center h="50vh">
