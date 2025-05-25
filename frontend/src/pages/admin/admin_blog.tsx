@@ -17,14 +17,14 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { postBlog } from "../../helpers/blog_services";
-import { BlogPostData } from "../../helpers/model";
+import { BlogPostData, BlogPostResponse } from "../../helpers/model";
 import useCustomToast from "../../hooks/useCustomToast";
 import DB_Navbar from "../../components/common/DB_Navbar";
 import BlogTable from "../../components/admin/blog_table";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-// ReactQuill toolbar configuration with color support
+// ReactQuill toolbar configuration
 const quillModules = {
   toolbar: [
     [{ font: [] }],
@@ -94,8 +94,14 @@ const AdminBlogForm = () => {
 
     setLoading(true);
     try {
-      await postBlog(blogData);
+      const response: BlogPostResponse = await postBlog(blogData); // ✅ updated to use typed response
+      const createdBlog = response.blog; // ✅ extract blog from response
+
       showToast("Success", "Blog created successfully!", "success");
+
+      // Optional: You can use createdBlog to update a blog list in parent or log
+      console.log("Created Blog:", createdBlog);
+
       setFormData({
         title: "",
         description: "",

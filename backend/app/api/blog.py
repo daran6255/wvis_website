@@ -35,7 +35,19 @@ def create_blog():
     db.session.add(blog)
     db.session.commit()
 
-    return jsonify({"message": "Blog created successfully!"}), 201
+    return jsonify({
+    "message": "Blog created successfully!",
+    "blog": {
+        "id": str(blog.id),
+        "title": blog.title,
+        "description": blog.description,
+        "author": blog.author,
+        "tags": blog.tags,
+        "image": url_for("static", filename=f"images/{blog.image}", _external=True),
+        "created_at": blog.created_at.isoformat()
+    }
+}), 201
+
 
 
 # GET: Retrieve all blogs

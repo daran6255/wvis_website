@@ -106,6 +106,15 @@ export type BlogListResponse = Blog[];
 
 // Response from POST /api/blogs
 export interface BlogPostResponse {
-  id: string;
   message: string;
+  blog: {
+    id: string;
+    title: string;
+    description: string;
+    author: string;
+    tags: string[];
+    image: string; // This will be a full URL like https://winvinaya.com/static/images/...
+    created_at: string;
+  };
 }
+
