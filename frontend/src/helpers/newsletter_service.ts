@@ -6,8 +6,12 @@ import {
   NewsletterPostResponse,
 } from "./model";
 
-// Base URL can be empty if you're using a proxy in vite.config.ts
-const API_BASE = "/api/newsletters";
+const API_BASE_URL =
+    import.meta.env.MODE === 'development'
+        ? 'https://winvinaya.com'
+        : ''; // Empty string works with Nginx in production
+
+const API_BASE = `${API_BASE_URL}/api/newsletters`;
 
 /**
  * Fetch all newsletters

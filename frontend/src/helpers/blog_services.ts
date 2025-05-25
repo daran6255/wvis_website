@@ -7,7 +7,13 @@ import {
 } from "./model";
 
 // Base API path for blogs
-const API_BASE = "/api/blogs";
+const API_BASE_URL =
+    import.meta.env.MODE === 'development'
+        ? 'https://winvinaya.com'
+        : ''; // Empty string works with Nginx in production
+
+// const API_BASE = `${API_BASE_URL}/api/newsletters`;
+const API_BASE = `${API_BASE_URL}/api/blogs`;
 
 /**
  * Fetch all blogs
