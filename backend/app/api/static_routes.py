@@ -11,5 +11,6 @@ def serve_pdf(filename):
 @static_bp.route("/static/images/<path:filename>")
 def serve_image(filename):
     image_dir = os.path.join(current_app.root_path, "static", "images")
+    print("Looking for image at:", image_dir)
     return send_from_directory(image_dir, filename)
 
